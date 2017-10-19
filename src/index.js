@@ -7,7 +7,7 @@ import preRenderMiddleware from './middleware/preRenderMiddleware';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index.less';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import App from './App';

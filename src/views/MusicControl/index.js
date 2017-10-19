@@ -6,19 +6,19 @@ import { Row, Col } from 'react-bootstrap';
 import { getImage, getSong} from '../../helpers/song';
 import PlayerControl from '../PlayerControl';
 import Tracklist from '../Tracklist';
-import './index.css';
+import '../../styles/musicControl.less';
 
 class MusicControl extends Component {
   render(){
     const { tracklist } = this.props;
     const currentSong = R.head(tracklist);
-    const image = (currentSong!==undefined) ?  getImage(currentSong.id) :'demo.jpg';
-    const song = (currentSong!==undefined) ? getSong(currentSong.id) : 'demo.mp3' ;
+    const image = getImage(currentSong);
+    const song = getSong(currentSong);
 
     return(
       <div>
        <Row>
-        <Col xs={12} md={8} className='col-centered'>
+        <Col xs={12} mdOffset={1} md={10} className='music-control'>
           <Col xs={12} md={12} className="panel panel-default dark">
             <div className="panel-body">
              <PlayerControl image={image} song={song} />
