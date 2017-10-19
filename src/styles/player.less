@@ -1,6 +1,16 @@
+@import './bootstrap/variables.less';
 
 .player-control{
   height: 100px;
   padding:20px;
   font-size: 50px;
+}
+
+@media (max-width: @screen-sm) {
+  .player-control .backward{
+    right: 35px;
+  }
+  .player-control .forward{
+    right: 10px;
+  }
 }
