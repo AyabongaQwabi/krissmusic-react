@@ -1,7 +1,7 @@
-export const getImage = (songId) => {
-  return 'default.jpg'
+export const getImage = (song) => {
+  return '../../repositories/images/demo.png'
 }
 
-export const getSong = (songId) => {
+export const getSong = (song) => {
   return 'default.mp3'
 }
