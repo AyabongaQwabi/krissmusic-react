@@ -19,3 +19,5 @@ export const COMPANY_DETAILS = {
 export const SEO_CONTENT = {
   DESC: 'Upload , Download and Listen to local Music online.'
 };
+
+export const IMAGE_SOURCE = '../../repositories/images/';

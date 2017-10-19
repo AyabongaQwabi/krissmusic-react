@@ -5,12 +5,30 @@
   padding:20px;
   font-size: 50px;
 }
+.play-pause{
 
+  .control{
+    left: -75px;
+    top: 20px;
+    font-size: 50px;
+    color: rgb(255, 255, 255);
+    text-shadow: 2px 1px 4px rgb(0, 0, 0);
+  }
+}
 @media (max-width: @screen-sm) {
   .player-control .backward{
     right: 35px;
   }
   .player-control .forward{
     right: 10px;
+  }
+  .play-pause{
+    height:100px;
+    .control{
+      left:0;
+      top: -75px;
+      font-size: 50px;
+      color: rgba(0,0,0,.8);
+    }
   }
 }
