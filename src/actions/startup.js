@@ -1,5 +1,7 @@
 import * as types from './types';
 import appConfig from '../config/appConfig'
+import { setNowPlaying } from './player.js';
+import * as R from'ramda';
 
 const dummyTracks = [
   {
@@ -53,6 +55,7 @@ const loadTracklist = (tracks) => {
 const startUpActions = (dispatch) => {
   dispatch(setUpConfigs(appConfig));
   dispatch(loadTracklist(dummyTracks));
+  dispatch(setNowPlaying(R.head(dummyTracks)));
 }
 
 export  const startup = () => {

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.less';
-
+import LogRocket from 'logrocket';
+LogRocket.init('8scu27/kriss');
 
 class App extends Component {
   render() {

@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { PropTypes } from 'prop-types';
 import { Col, Glyphicon } from 'react-bootstrap';
 import { IMAGE_SOURCE } from '../../config/constants';
+import { connect } from 'react-redux';
+import { setNowPlaying } from '../../actions/player.js';
 import * as R from 'ramda';
 import '../../styles/player.less';
 
@@ -11,14 +12,9 @@ class PlayerControl extends Component {
     this.OnPlay = this.OnPlay.bind(this);
     this.OnNext = this.OnNext.bind(this);
     this.OnPrevious = this.OnPrevious.bind(this);
-    this.state ={ playPauseGlyph: 'play', current:{} }
+    this.state ={ playPauseGlyph: 'play' }
   }
 
-  componentWillMount(){
-    this.setState({
-      current: this.props.current,
-    })
-  }
 
   OnPlay(){
     const { playPauseGlyph } = this.state;
@@ -30,28 +26,22 @@ class PlayerControl extends Component {
   }
 
   OnPrevious(){
-    const { tracklist } = this.props;
-    const { current } = this.state;
-    const previousSongs = R.filter((song) => song.id < current.id , tracklist);
-    const toPlay = !R.isEmpty(previousSongs) ? R.head(previousSongs) : current;
-    this.setState({
-      current: toPlay,
-    })
+    const { tracklist, current, setNowPlaying } = this.props;
+    const previousSongs = R.filter((song) => song.id < current.get('id'), tracklist.toJS());
+    const toPlay = !R.isEmpty(previousSongs) ? R.last(previousSongs) : current;
+    setNowPlaying(toPlay);
   }
 
   OnNext(){
-    const { tracklist } = this.props;
-    const { current } = this.state;
-    const nextSongs = R.filter((song) => song.id > current.id , tracklist);
+    const { tracklist, current, setNowPlaying } = this.props;
+    const nextSongs = R.filter((song) => song.id > current.get('id') , tracklist.toJS());
     const toPlay = !R.isEmpty(nextSongs) ? R.head(nextSongs) : current;
-    this.setState({
-      current: toPlay,
-    })
+    setNowPlaying(toPlay);
   }
 
   render() {
 
-    const { image, artist, title } = this.state.current;
+    const { image, artist, title } = this.props.current.toJS();
     const imageSize = {height:"100px",width:"100px"};
     const imageUrl = IMAGE_SOURCE.concat(image);
 
@@ -69,23 +59,25 @@ class PlayerControl extends Component {
             <Glyphicon glyph="forward" className='ctrl-btn forward' onClick={this.OnNext} />
           </Col>
         </div>
-        <Col xs={12} md={12}>
-          <small>Now Playing </small><br />
-          <small> {artist} - {title} </small>
+        <Col xs={12} md={12} className="Detail">
+          <small>{title}</small><br />
+          <small> {artist}</small>
         </Col>
       </div>
     )
   }
 }
 
-PlayerControl.propTypes = {
-  current: PropTypes.shape({
-    artist: PropTypes.string,
-    title: PropTypes.string,
-    song: PropTypes.string,
-    image: PropTypes.string,
-  }),
-  tracklist: PropTypes.array.isRequired,
-}
+const mapStateToProps = (state) => ({
+  tracklist : state.getIn(['tracklist','songs']),
+  currentSong: state.getIn(['player','nowPlaying'])
+})
 
-export default PlayerControl;
+const mapDispatchToProps = (dispatch) => ({
+  setNowPlaying:(t) => dispatch(setNowPlaying(t)),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(PlayerControl);

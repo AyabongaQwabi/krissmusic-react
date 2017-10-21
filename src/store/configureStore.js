@@ -8,6 +8,7 @@ import createFsaCheck from '../middleware/createFsaCheckMiddleware';
 import { catchErrorMiddleware } from '../config/configureErrorHandling';
 import createScrollToTopMiddleware from '../middleware/createScrollToTopMiddleware';
 import fsaThunkMiddleware from 'redux-fsa-thunk';
+import LogRocket from 'logrocket';
 
 /*
  * @param {History Object} a history object. We use `createMemoryHistory` for server-side rendering,
@@ -22,7 +23,7 @@ export default function configureStore(initialState, history) {
     promiseMiddleware,
     routerMiddleware(history),
     fsaThunkMiddleware,
-    createScrollToTopMiddleware(),
+    createScrollToTopMiddleware()
   ];
 
     middleware.push(createLogger());
@@ -32,7 +33,7 @@ export default function configureStore(initialState, history) {
   const store = createStore(rootReducer,
     fromJS(initialState),
     compose(
-      applyMiddleware(...middleware),
+      applyMiddleware(...middleware, LogRocket.reduxMiddleware()),
       typeof window === 'object' && typeof window.devToolsExtension !== 'undefined'
         ? window.devToolsExtension()
         : f => f
