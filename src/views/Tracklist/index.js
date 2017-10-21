@@ -1,39 +1,29 @@
 import React, { Component } from 'react';
 import { PropTypes } from 'prop-types';
 import * as R from'ramda';
+import { ListGroup, ListGroupItem } from 'react-bootstrap';
+import '../../styles/tracklist.less';
 
 class Tracklist extends Component {
   render() {
-    const { tracks } = this.props;
+    const { tracks, onTrackSelection } = this.props;
     return(
       <div>
-        <table className="table dark">
-          <thead>
-            <tr>
-              <th className='text-center'>Artist</th>
-              <th className='text-center'>Track</th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              R.map((track) => {
-                return (
-                  <tr key={track.id}>
-                    <td>{track.artist}</td>
-                    <td>{track.title}</td>
-                  </tr>
-                )
-              },tracks)
-            }
-          </tbody>
-        </table>
+        <ListGroup className='tracklist'>
+          {R.map((track) =>
+            <ListGroupItem header={track.title} key={track.id} id={track.id} onClick={onTrackSelection(track.id)}>
+             {track.artist}
+            </ListGroupItem>
+          , tracks)}
+        </ListGroup>
       </div>
     )
   }
 }
 
 Tracklist.propTypes = {
-  tracklist: PropTypes.array
+  tracklist: PropTypes.array,
+  onTrackSelection:PropTypes.func.isRequired,
 }
 
 export default Tracklist;
