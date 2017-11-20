@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Col, Glyphicon } from 'react-bootstrap';
-import { IMAGE_SOURCE, TRACK_SOURCE } from '../../config/constants';
+import { Row, Col, Glyphicon } from 'react-bootstrap';
+import { IMAGE_SOURCE, TRACK_SOURCE, WEB_SOURCE } from '../../config/constants';
 import { connect } from 'react-redux';
 import { setNowPlaying } from '../../actions/player.js';
 import * as R from 'ramda';
@@ -85,25 +85,31 @@ class PlayerControl extends Component {
   }
   render() {
 
-    const { image, artist, title} = this.props.current.toJS();
-    const imageSize = {height:"100px",width:"100px"};
-    const imageUrl = IMAGE_SOURCE.concat(image);
-    const trackUrl = TRACK_SOURCE.concat(this.props.currentSong.get('track'));
+    const { image, artist, title, web} = this.props.current.toJS();
+    const imageSize = {height:"200px",width:"200px"};
+    const imageUrl = web ? WEB_SOURCE.concat(image) : IMAGE_SOURCE.concat(image);
+    const trackUrl = web ? WEB_SOURCE.concat(this.props.currentSong.get('track')) : TRACK_SOURCE.concat(this.props.currentSong.get('track'))
     const { volume, muted, loop, played, duration, playbackRate } = this.state
 
     return(
       <div className='player-container'>
         <div className='player'>
-          <Col xs={2} md={2} mdOffset={2} className='control text-left'>
-            <Glyphicon glyph="backward" className='ctrl-btn backward' onClick={this.OnPrevious} />
-          </Col>
-          <Col xs={8} md={4} className='play-pause'>
-            <img src={imageUrl} alt={artist} style={imageSize} />
-            <Glyphicon glyph={this.state.playPauseGlyph} className='control' onClick={this.togglePlayState} />
-          </Col>
-          <Col xs={2} md={2} className='control text-right'>
-            <Glyphicon glyph="forward" className='ctrl-btn forward' onClick={this.OnNext} />
-          </Col>
+          <Row>
+            <Col md={12}>
+              <img src={imageUrl} alt={artist} style={imageSize} />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={2} md={2} mdOffset={2} className='control text-left'>
+              <Glyphicon glyph="backward" className='ctrl-btn backward' onClick={this.OnPrevious} />
+            </Col>
+            <Col xs={8} md={4} className='play-pause'>
+              <Glyphicon glyph={this.state.playPauseGlyph} className='control' onClick={this.togglePlayState} />
+            </Col>
+            <Col xs={2} md={2} className='control text-right'>
+              <Glyphicon glyph="forward" className='ctrl-btn forward' onClick={this.OnNext} />
+            </Col>
+          </Row>
         </div>
         <Col xs={12} md={12} className="detail">
            <div>
