@@ -3,36 +3,9 @@ import appConfig from '../config/appConfig'
 import { setNowPlaying } from './player.js';
 import * as R from'ramda';
 
-const dummyTracks = [
-  {
-    id:1,
-    track:'first.mp3',
-    title:'Them teeth nigga',
-    image:'demo.png',
-    artist:'Aquafresh',
-  },
-  {
-    id:2,
-    track:'second.mp3',
-    title:'Chpsticks',
-    image:'demo2.png',
-    artist:'Chineese Man Live'
-  },
-  {
-    id:3,
-    track:'second.mp3',
-    title:'Kush Kush',
-    image:'demo3.png',
-    artist:'Cynic'
-  },
-  {
-    id:4,
-    track:'second.mp3',
-    title:"Mayenzeke'enzekayo",
-    image:'demo4.png',
-    artist:'Dr Lee Hong'
-  }
-]
+import tracks from '../config/tracks.json';
+
+const dummyTracks = tracks
 
 const setUpConfigs = (config) => {
   const type = types.SETUP_CONFIGURATION
