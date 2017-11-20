@@ -8,7 +8,7 @@ class Tracklist extends Component {
   render() {
     const { tracks, onTrackSelection } = this.props;
     return(
-      <div>
+      <div className='tracklist-container'>
         <ListGroup className='tracklist'>
           {R.map((track) =>
             <ListGroupItem header={track.title} key={track.id} id={track.id} onClick={onTrackSelection(track.id)}>

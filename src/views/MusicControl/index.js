@@ -28,9 +28,9 @@ class MusicControl extends Component {
     return(
       <div>
        <Row>
-        <Col xs={12} mdOffset={1} md={10} className='music-control'>
+        <Col xs={12} mdOffset={1} md={10} className='music-control no-side-padding'>
           <Col xs={12} md={12} className="panel panel-default dark">
-            <div className="panel-body">
+            <div className="panel-body no-side-padding">
              {currentlyPlaying && <PlayerControl current={currentSong} tracklist={tracklist.toJS()}/>}
              <Tracklist tracks={tracklist.toJS()} onTrackSelection={R.curry(this.selectTrack)}/>
             </div>
