@@ -1,3 +1,5 @@
+@import './bootstrap/variables.less';
+
 .tracklist{
   color: #000;
   background:#0a0a0a;
@@ -14,5 +16,12 @@
     background:#060606;
     border:1px solid #171717;
     color:#fff;
+  }
+}
+
+@media (max-width: @screen-sm) {
+  .tracklist{
+    padding-left: 0px !important;
+    padding-right: 0px !important;
   }
 }
