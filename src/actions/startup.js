@@ -2,37 +2,11 @@ import * as types from './types';
 import appConfig from '../config/appConfig'
 import { setNowPlaying } from './player.js';
 import * as R from'ramda';
+import request from 'axios';
 
-const dummyTracks = [
-  {
-    id:1,
-    track:'first.mp3',
-    title:'Them teeth nigga',
-    image:'demo.png',
-    artist:'Aquafresh',
-  },
-  {
-    id:2,
-    track:'second.mp3',
-    title:'Chpsticks',
-    image:'demo2.png',
-    artist:'Chineese Man Live'
-  },
-  {
-    id:3,
-    track:'second.mp3',
-    title:'Kush Kush',
-    image:'demo3.png',
-    artist:'Cynic'
-  },
-  {
-    id:4,
-    track:'second.mp3',
-    title:"Mayenzeke'enzekayo",
-    image:'demo4.png',
-    artist:'Dr Lee Hong'
-  }
-]
+import tracks from '../config/tracks.json';
+
+const dummyTracks = tracks
 
 const setUpConfigs = (config) => {
   const type = types.SETUP_CONFIGURATION
@@ -53,9 +27,26 @@ const loadTracklist = (tracks) => {
 };
 
 const startUpActions = (dispatch) => {
-  dispatch(setUpConfigs(appConfig));
-  dispatch(loadTracklist(dummyTracks));
-  dispatch(setNowPlaying(R.head(dummyTracks)));
+  request.get('http://www.krissmusic.tk/songlist/?raw=true').then((response)=>{
+    const songs = response.data;
+    const cleanSongs = songs.map((song) => {
+      const unclusteredSong = R.omit(['play_count','download_count','flame_count' ],song)
+      const trackedSong = R.dissoc('src',R.assoc('track',song.src, unclusteredSong));
+      const titledSong = R.dissoc('name',R.assoc('title',song.name, trackedSong))
+      const webbedSong = R.assoc('web',true,titledSong)
+      return webbedSong
+    })
+    dispatch(setUpConfigs(appConfig));
+    dispatch(loadTracklist(cleanSongs));
+    dispatch(setNowPlaying(R.head(cleanSongs)));
+  })
+  .catch((err) =>{
+    console.log(err)
+    dispatch(setUpConfigs(appConfig));
+    dispatch(loadTracklist(dummyTracks));
+    dispatch(setNowPlaying(R.head(dummyTracks)));
+  })
+
 }
 
 export  const startup = () => {

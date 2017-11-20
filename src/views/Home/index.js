@@ -9,7 +9,7 @@ class Home extends Component {
       <div>
         <div>
         <MegaButton> Upload </MegaButton>
-        <h2>KRISS MUSIC</h2>
+        <h2 className='app-name'>KRISS MUSIC</h2>
         </div>
         <MusicControl />
       </div>
