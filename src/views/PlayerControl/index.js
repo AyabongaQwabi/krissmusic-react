@@ -9,6 +9,8 @@ import ReactPlayer from 'react-player';
 import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
 import moment from 'moment'
+import Coverflow from 'react-coverflow';
+
 class PlayerControl extends Component {
   constructor(){
     super();
@@ -85,7 +87,8 @@ class PlayerControl extends Component {
   }
   render() {
 
-    const { image, artist, title, web} = this.props.current.toJS();
+    const { image, artist, title, web, id} = this.props.current.toJS();
+    const { tracklist, setNowPlaying } = this.props;
     const imageSize = {height:"200px",width:"200px"};
     const imageUrl = web ? WEB_SOURCE.concat(image) : IMAGE_SOURCE.concat(image);
     const trackUrl = web ? WEB_SOURCE.concat(this.props.currentSong.get('track')) : TRACK_SOURCE.concat(this.props.currentSong.get('track'))
@@ -95,10 +98,25 @@ class PlayerControl extends Component {
       <div className='player-container'>
         <div className='player'>
           <Row>
-            <Col md={12}>
-              <img src={imageUrl} alt={artist} style={imageSize} />
-            </Col>
+          <div className="col-md-12 hidden-sm-down">
+            <Coverflow
+              width="100%" height="300"
+              displayQuantityOfSide={3}
+              navigation={false}
+              enableScroll={true}
+              clickable={true}
+              active={id}
+              >
+              {R.map((track) => {
+                const imgSource = web ? WEB_SOURCE.concat(track.image) : IMAGE_SOURCE.concat(track.image);
+                return <img src={imgSource} alt={track.artist} data-action={()=> setNowPlaying(track)} />
+              }, tracklist.toJS())}
+
+
+            </Coverflow>
+           </div>
           </Row>
+
           <Row>
             <Col xs={2} md={2} mdOffset={2} className='control text-left'>
               <Glyphicon glyph="backward" className='ctrl-btn backward' onClick={this.OnPrevious} />
