@@ -10,7 +10,8 @@ class App extends Component {
     const {children} = this.props;
     return (
       <div className="App">
-       <link href="https://fonts.googleapis.com/css?family=Allan" rel="stylesheet" />
+       <link href="https://fonts.googleapis.com/css?family=Didact+Gothic|Poiret+One|Carter+One|Montserrat" rel="stylesheet"/>
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
         <div className="App-header">
           {children}
        </div>

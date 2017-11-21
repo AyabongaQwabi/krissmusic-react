@@ -1,13 +1,68 @@
+
 .col-centered{
     float: none;
     margin: 0 auto;
 }
 .dark{
-  background-color: #0a0a0a !important;
+  background-color: #080808 !important;
   color: white;
+
+
 }
 
 .no-side-padding{
   padding-left:0 !important;
   padding-right:0 !important;
+}
+
+.emoji{
+  font-size: 30px;
+  font-weight: 900;
+  color:#7cb341;
+}
+
+svg {
+    display: block;
+    font: 10.5em 'Montserrat';
+    width: 560px;
+    height: 300px;
+    margin: -100px auto;
+}
+
+.text-copy {
+    fill: none;
+    stroke: white;
+    stroke-dasharray: 6% 29%;
+    stroke-width: 5px;
+    stroke-dashoffset: 0%;
+    animation: stroke-offset 5.5s infinite linear;
+}
+
+.text-copy:nth-child(1){
+	stroke: #7cb341;
+	animation-delay: -1;
+}
+
+.text-copy:nth-child(2){
+	stroke: #7cb341;
+	animation-delay: -2s;
+}
+
+.text-copy:nth-child(3){
+	stroke: #7cb341;
+	animation-delay: -3s;
+}
+
+.text-copy:nth-child(4){
+	stroke: #7cb341;
+	animation-delay: -4s;
+}
+
+.text-copy:nth-child(5){
+	stroke: #7cb341;
+	animation-delay: -5s;
+}
+
+@keyframes stroke-offset{
+	100% {stroke-dashoffset: -35%;}
 }
