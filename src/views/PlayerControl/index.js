@@ -11,18 +11,19 @@ import 'react-rangeslider/lib/index.css'
 import moment from 'moment'
 import Coverflow from 'react-coverflow';
 
+const generateWhatsappUrl =';'
 class PlayerControl extends Component {
   constructor(){
     super();
     this.togglePlayState = this.togglePlayState.bind(this);
-    this.OnNext = this.OnNext.bind(this);
-    this.OnPrevious = this.OnPrevious.bind(this);
+    this.PlayNext = this.PlayNext.bind(this);
+    this.PlayPrevious = this.PlayPrevious.bind(this);
     this.state ={
       playPauseGlyph: 'play',
       muteStateGlyph:'volume-up',
       loopStateGlyph:'repeat',
       playstate: false,
-      volume: 0.8,
+      volume: 0.5,
       muted: false,
       played: 0,
       loaded: 0,
@@ -42,14 +43,14 @@ class PlayerControl extends Component {
       playstate: !playstate
     });
   }
-  OnPrevious(){
+  PlayPrevious(){
     const { tracklist, current, setNowPlaying } = this.props;
     const previousSongs = R.filter((song) => song.id < current.get('id'), tracklist.toJS());
     const toPlay = !R.isEmpty(previousSongs) ? R.last(previousSongs) : current;
     setNowPlaying(toPlay);
   }
 
-  OnNext(){
+  PlayNext(){
     const { tracklist, current, setNowPlaying } = this.props;
     const nextSongs = R.filter((song) => song.id > current.get('id') , tracklist.toJS());
     const toPlay = !R.isEmpty(nextSongs) ? R.head(nextSongs) : current;
@@ -84,6 +85,11 @@ class PlayerControl extends Component {
   }
   onProgress = state => {
       this.setState(state)
+      const currentTime = this.player.getCurrentTime();
+      const overallTime = this.player.getDuration();
+      if(currentTime === overallTime){
+        this.PlayNext();
+      }
   }
   render() {
 
@@ -100,7 +106,7 @@ class PlayerControl extends Component {
           <Row>
           <div className="col-md-12 hidden-sm-down">
             <Coverflow
-              width="100%" height="300"
+              width="100%" height="350"
               displayQuantityOfSide={3}
               navigation={false}
               enableScroll={true}
@@ -117,15 +123,39 @@ class PlayerControl extends Component {
            </div>
           </Row>
 
-          <Row>
+          <Row >
             <Col xs={2} md={2} mdOffset={2} className='control text-left'>
-              <Glyphicon glyph="backward" className='ctrl-btn backward' onClick={this.OnPrevious} />
+              <Glyphicon glyph="backward" className='ctrl-btn backward' onClick={this.PlayPrevious} />
             </Col>
             <Col xs={8} md={4} className='play-pause'>
               <Glyphicon glyph={this.state.playPauseGlyph} className='control' onClick={this.togglePlayState} />
             </Col>
             <Col xs={2} md={2} className='control text-right'>
-              <Glyphicon glyph="forward" className='ctrl-btn forward' onClick={this.OnNext} />
+              <Glyphicon glyph="forward" className='ctrl-btn forward' onClick={this.PlayNext} />
+            </Col>
+          </Row>
+          <Row className='social-settings'>
+            <Col xs={2} md={2} mdOffset={2}>
+              <Glyphicon glyph="cloud-download" className='social-buttons' onClick={this.PlayPrevious} />
+            </Col>
+            <Col xs={2} md={2} >
+              <Glyphicon glyph="thumbs-up" className='social-buttons' onClick={this.togglePlayState} />
+            </Col>
+            <Col xs={2} md={2} >
+             {/* generateWhatsappUrl(trackUrl) */}
+              <a href='' className="social-buttons" data-action="share/whatsapp/share" aria-label="Left Align">
+                <span className="" aria-hidden="true">
+                  <i className="fa fa-whatsapp" aria-hidden="true"></i>
+                </span>
+              </a>
+            </Col>
+            <Col xs={2} md={2} >
+             {/* generateWhatsappUrl(trackUrl) */}
+              <a href='' className="social-buttons" data-action="share/whatsapp/share" aria-label="Left Align">
+                <span className="" aria-hidden="true">
+                  <i className="fa fa-facebook-square" aria-hidden="true"></i>
+                </span>
+              </a>
             </Col>
           </Row>
         </div>
