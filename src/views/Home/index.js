@@ -6,8 +6,8 @@ import MusicControl from '../MusicControl';
 class Home extends Component {
   render(){
     return (
-      <div className='dark'>
-      <div className='col-md-12 dark'>
+     <div className='row dark'>
+      <div className='col-md-12 col-xs-12 dark'>
         <div className='app-name'>
           <svg viewBox="0 0 960 300">
              <symbol id="s-text">
