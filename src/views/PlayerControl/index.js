@@ -11,6 +11,7 @@ import 'react-rangeslider/lib/index.css'
 import moment from 'moment'
 import Coverflow from 'react-coverflow';
 import { withGetScreen } from 'react-getscreen';
+import MegaButton from '../atoms/button';
 
 
 
@@ -105,6 +106,11 @@ class PlayerControl extends Component {
     return(
       <div className='player-container'>
         <div className='player'>
+          <MegaButton>
+            <Glyphicon glyph="cloud-upload" className='social-buttons' />
+            &nbsp;
+            UPLOAD
+          </MegaButton>
           <Row>
           <div className="col-md-12">
             {this.props.isDesktop() && <Coverflow
