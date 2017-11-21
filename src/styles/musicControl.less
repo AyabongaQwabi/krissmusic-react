@@ -1,4 +1,4 @@
-
+@import './bootstrap/variables.less';
 .col-centered{
     float: none;
     margin: 0 auto;
@@ -49,7 +49,7 @@ svg {
 }
 
 .text-copy:nth-child(3){
-	stroke: #7cb341;
+	stroke: #fff;
 	animation-delay: -3s;
 }
 
@@ -59,10 +59,15 @@ svg {
 }
 
 .text-copy:nth-child(5){
-	stroke: #7cb341;
+	stroke: #fff;
 	animation-delay: -5s;
 }
-
+@media (max-width: @screen-sm) {
+  svg {
+      font: 5.5em 'Montserrat';
+      margin: -100px -120px;
+  }
+}
 @keyframes stroke-offset{
 	100% {stroke-dashoffset: -35%;}
 }
