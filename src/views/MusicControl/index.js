@@ -33,7 +33,6 @@ class MusicControl extends Component {
           <Col xs={12} md={12} className="panel panel-default dark">
             <div className="panel-body no-side-padding">
              {currentlyPlaying && <PlayerControl current={currentSong} tracklist={tracklist.toJS()}/>}
-             <h2 style={{padding:'2%'}}> Kepping it <span> <i className='emoji'> &#x1f4af;</i> </span> with the realest </h2>
              <Tracklist tracks={tracklist.toJS()} onTrackSelection={R.curry(this.selectTrack)}/>
             </div>
           </Col>

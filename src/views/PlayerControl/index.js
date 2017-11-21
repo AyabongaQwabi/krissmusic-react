@@ -10,6 +10,9 @@ import Slider from 'react-rangeslider'
 import 'react-rangeslider/lib/index.css'
 import moment from 'moment'
 import Coverflow from 'react-coverflow';
+import { withGetScreen } from 'react-getscreen';
+import MegaButton from '../atoms/button';
+
 
 const generateWhatsappUrl =';'
 class PlayerControl extends Component {
@@ -92,34 +95,42 @@ class PlayerControl extends Component {
       }
   }
   render() {
-
+    console.log(this.props)
     const { image, artist, title, web, id} = this.props.current.toJS();
     const { tracklist, setNowPlaying } = this.props;
     const imageSize = {height:"200px",width:"200px"};
     const imageUrl = web ? WEB_SOURCE.concat(image) : IMAGE_SOURCE.concat(image);
     const trackUrl = web ? WEB_SOURCE.concat(this.props.currentSong.get('track')) : TRACK_SOURCE.concat(this.props.currentSong.get('track'))
-    const { volume, muted, loop, played, duration, playbackRate } = this.state
-
+    const { volume, muted, loop, played, duration, playbackRate } = this.state;
     return(
       <div className='player-container'>
         <div className='player'>
+          <MegaButton>
+            <Glyphicon glyph="cloud-upload" className='social-buttons' />
+            &nbsp;
+            UPLOAD
+          </MegaButton>
           <Row>
-          <div className="col-md-12 hidden-sm-down">
-            <Coverflow
-              width="100%" height="350"
-              displayQuantityOfSide={3}
-              navigation={false}
-              enableScroll={true}
-              clickable={true}
-              active={id}
-              >
-              {R.map((track) => {
-                const imgSource = web ? WEB_SOURCE.concat(track.image) : IMAGE_SOURCE.concat(track.image);
-                return <img src={imgSource} alt={track.artist} data-action={()=> setNowPlaying(track)} />
-              }, tracklist.toJS())}
-
-
-            </Coverflow>
+          <div className="col-md-12">
+            {this.props.isDesktop() && <Coverflow
+                width="100%" height="350"
+                displayQuantityOfSide={3}
+                navigation={false}
+                enableScroll={true}
+                clickable={true}
+                active={id}
+                >
+                {R.map((track) => {
+                  const imgSource = web ? WEB_SOURCE.concat(track.image) : IMAGE_SOURCE.concat(track.image);
+                  return <img src={imgSource} alt={track.artist} data-action={()=> setNowPlaying(track)} />
+                }, tracklist.toJS())}
+              </Coverflow>}
+              {
+                (this.props.isTablet() || this.props.isMobile()) &&
+                <Col md={12}>
+                  <img src={imageUrl} alt={artist} style={imageSize} />
+                </Col>
+               }
            </div>
           </Row>
 
@@ -135,13 +146,13 @@ class PlayerControl extends Component {
             </Col>
           </Row>
           <Row className='social-settings'>
-            <Col xs={2} md={2} mdOffset={2}>
-              <Glyphicon glyph="cloud-download" className='social-buttons' onClick={this.PlayPrevious} />
+            <Col xs={3} md={2} mdOffset={2}>
+              <Glyphicon glyph="cloud-download" className='social-buttons' />
             </Col>
-            <Col xs={2} md={2} >
-              <Glyphicon glyph="thumbs-up" className='social-buttons' onClick={this.togglePlayState} />
+            <Col xs={3} md={2} >
+              <Glyphicon glyph="thumbs-up" className='social-buttons'  />
             </Col>
-            <Col xs={2} md={2} >
+            <Col xs={3} md={2} >
              {/* generateWhatsappUrl(trackUrl) */}
               <a href='' className="social-buttons" data-action="share/whatsapp/share" aria-label="Left Align">
                 <span className="" aria-hidden="true">
@@ -149,7 +160,7 @@ class PlayerControl extends Component {
                 </span>
               </a>
             </Col>
-            <Col xs={2} md={2} >
+            <Col xs={3} md={2} >
              {/* generateWhatsappUrl(trackUrl) */}
               <a href='' className="social-buttons" data-action="share/whatsapp/share" aria-label="Left Align">
                 <span className="" aria-hidden="true">
@@ -243,8 +254,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setNowPlaying:(t) => dispatch(setNowPlaying(t)),
 })
-
-export default connect(
+const options = {mobileLimit:480, tabletLimit: 768}
+export default withGetScreen(connect(
   mapStateToProps,
   mapDispatchToProps
-)(PlayerControl);
+)(PlayerControl), options);
