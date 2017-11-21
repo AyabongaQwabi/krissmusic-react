@@ -29,7 +29,7 @@ class MusicControl extends Component {
     return(
       <div>
        <Row>
-        <Col xs={12} mdOffset={1} md={10} className='music-control no-side-padding'>
+        <Col xs={11} mdOffset={1} md={10} className='music-control no-side-padding'>
           <Col xs={12} md={12} className="panel panel-default dark">
             <div className="panel-body no-side-padding">
              {currentlyPlaying && <PlayerControl current={currentSong} tracklist={tracklist.toJS()}/>}

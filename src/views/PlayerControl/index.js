@@ -14,6 +14,7 @@ import { withGetScreen } from 'react-getscreen';
 import MegaButton from '../atoms/button';
 
 
+
 const generateWhatsappUrl =';'
 class PlayerControl extends Component {
   constructor(){
