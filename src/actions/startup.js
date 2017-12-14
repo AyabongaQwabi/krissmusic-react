@@ -29,7 +29,7 @@ const loadTracklist = (tracks) => {
 };
 
 const startUpActions = (dispatch) => {
-  request.get('http://www.krissmusic.tk/songlist/?raw=true').then((response)=>{
+  request.get('http://www.krissmusic.tk:3000/songlist/?raw=true').then((response)=>{
     const songs = response.data;
     const mapIndexed =  R.addIndex(R.map)
 

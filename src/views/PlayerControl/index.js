@@ -96,7 +96,6 @@ class PlayerControl extends Component {
       }
   }
   render() {
-    console.log(this.props)
     const { image, artist, title, web, id} = this.props.current.toJS();
     const { tracklist, setNowPlaying } = this.props;
     const imageSize = {height:"200px",width:"200px"};
@@ -106,11 +105,24 @@ class PlayerControl extends Component {
     return(
       <div className='player-container'>
         <div className='player'>
-          <MegaButton>
-            <Glyphicon glyph="cloud-upload" className='social-buttons' />
-            &nbsp;
-            UPLOAD
-          </MegaButton>
+         <Row>
+            <Col md={6} xs={6} className='text-right'>
+              <MegaButton>
+                <Glyphicon glyph="cloud-upload" className='social-buttons' />
+                &nbsp;
+                UPLOAD
+              </MegaButton>
+            </Col>
+            <Col md={6} xs={6} className='text-left'>
+              <MegaButton>
+                <Glyphicon glyph="share-alt" className='social-buttons' />
+                &nbsp;
+                <a href='https://www.krissmusic.tk' style={{color:'#fff',textDecoration:"none"}}>
+                  OLD SITE
+                </a>
+              </MegaButton>
+            </Col>
+          </Row> 
           <Row>
           <div className="col-md-12">
             {this.props.isDesktop() && <Coverflow

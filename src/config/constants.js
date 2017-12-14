@@ -22,4 +22,4 @@ export const SEO_CONTENT = {
 
 export const IMAGE_SOURCE = '../../repositories/images/';
 export const TRACK_SOURCE = '../../repositories/sounds/';
-export const WEB_SOURCE = 'http://www.krissmusic.tk/';
+export const WEB_SOURCE = 'https://www.krissmusic.tk/';

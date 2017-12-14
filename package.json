@@ -54,6 +54,7 @@
     "redux-fsa-thunk": "0.0.2",
     "redux-immutablejs": "0.0.8",
     "redux-logger": "^3.0.6",
+    "source-map-explorer": "^1.5.0",
     "string.prototype.startswith": "^0.2.0",
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.4",
@@ -64,6 +65,7 @@
     "whatwg-fetch": "2.0.3"
   },
   "scripts": {
+    "analyze": "source-map-explorer build/static/js/main.*",
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom"
